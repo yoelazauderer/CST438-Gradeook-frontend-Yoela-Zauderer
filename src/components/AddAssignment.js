@@ -35,12 +35,16 @@ class AddAssignment extends Component {
     };
     
     handleChange = (event) => {
-        this.setState({courseId: event.target.value});
-        this.setState({assignmentName: event.target.value});
-        this.setState({dueDate: event.target.value});
-//        const target = event.target;
-//        const value = target.value;
-//        const courseId = target.name;
+        //this.setState({courseId: event.target.value});
+        //this.setState({assignmentName: event.target.value});
+        //this.setState({dueDate: event.target.value});
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        
+        this.setState( {
+                      [name]: value
+        });
 //
 //        this.setState({courseId: value});
     }
@@ -66,9 +70,9 @@ class AddAssignment extends Component {
                 <Dialog open={this.state.open} onClose={this.handleClose}>
                 <DialogTitle>Add Assignment</DialogTitle>
                 <DialogContent>
-                    <TextField autoFocus fullWidth label="Course Id" type="number" name="courseId" /*value={this.state.courseId}*/ onChange={this.handleChange}/>
-                <TextField autoFocus fullWidth label="Assignment Name" name="assignmentName" /*value={this.state.assignmentName}*/ onChange={this.handleChange}/>
-                    <TextField autoFocus fullWidth label="Due Date (dd-mm-yyyy)" type="string" name="dueDate" /*value={this.state.dueDate}*/ onChange={this.handleChange}/>
+                    <TextField autoFocus fullWidth label="Course Id" /*type="number"*/ name="courseId" value={this.state.courseId} onChange={this.handleChange}/>
+                <TextField autoFocus fullWidth label="Assignment Name" name="assignmentName" value={this.state.assignmentName} onChange={this.handleChange}/>
+                    <TextField autoFocus fullWidth label="Due Date (dd-mm-yyyy)" type="string" name="dueDate" value={this.state.dueDate} onChange={this.handleChange}/>
                 </DialogContent>
                 <DialogActions>
                 <Button color="secondary" onClick={this.handleClose}>Cancel</Button>

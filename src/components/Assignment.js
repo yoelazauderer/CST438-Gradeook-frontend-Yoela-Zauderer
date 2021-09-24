@@ -52,15 +52,17 @@ class Assignment extends Component {
   }
     
     // Add course
-    addAssignment = (courseId, assignmentName, dueDate) => {
+    addAssignment = (assignment) => {
         const token = Cookies.get('XSRF-TOKEN');
-        
+    
+        //const t = { 'assignmentId': 0, 'courseId': 0, 'assignmentName': assignmentName, 'dueDate': dueDate }
         fetch(`${SERVER_URL}/gradebook/add`,
               {
               method: 'POST',
               headers: { 'Content-Type': 'application/json',
               'X-XSRF-TOKEN': token  },
-              body: JSON.stringify(courseId, assignmentName, dueDate)
+
+              body: JSON.stringify(assignment)
               })
         .then(res => {
               if (res.ok) {
