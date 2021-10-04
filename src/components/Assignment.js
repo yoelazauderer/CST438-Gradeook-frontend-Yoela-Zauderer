@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 import {DataGrid} from '@material-ui/data-grid';
 import {SERVER_URL} from '../constants.js'
+import Grid from '@material-ui/core/Grid';
+import AddAssignment from './AddAssignment';
 
 // NOTE:  for OAuth security, http request must have
 //   credentials: 'include' 
@@ -48,6 +50,39 @@ class Assignment extends Component {
     console.log("Assignment.onRadioClick " + event.target.value);
     this.setState({selected: event.target.value});
   }
+    
+    // Add course
+    addAssignment = (assignment) => {
+        const token = Cookies.get('XSRF-TOKEN');
+    
+        //const t = { 'assignmentId': 0, 'courseId': 0, 'assignmentName': assignmentName, 'dueDate': dueDate }
+        fetch(`${SERVER_URL}/gradebook/add`,
+              {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json',
+              'X-XSRF-TOKEN': token  },
+
+              body: JSON.stringify(assignment)
+              })
+        .then(res => {
+              if (res.ok) {
+              toast.success("Assignment successfully added", {
+                            position: toast.POSITION.BOTTOM_LEFT
+                            });
+              this.fetchAssignments();
+              } else {
+              toast.error("Error when adding", {
+                          position: toast.POSITION.BOTTOM_LEFT
+                          });
+              console.error('Post http status =' + res.status);
+              }})
+        .catch(err => {
+               toast.error("Error when adding", {
+                           position: toast.POSITION.BOTTOM_LEFT
+                           });
+               console.error(err);
+               })
+    }
   
   render() {
      const columns = [
@@ -73,10 +108,20 @@ class Assignment extends Component {
       ];
       return (
           <div align="left" >
-                <h4>Assignment(s) ready to grade: </h4>
-                  <div style={{ height: 450, width: '100%', align:"left"   }}>
-                    <DataGrid rows={this.state.rows} columns={columns} />
-                  </div>                
+              
+              
+              <Grid container>
+                <Grid item>
+                    <h4>Assignment(s) ready to grade: </h4>
+                </Grid>
+              
+                <Grid item>
+                    <AddAssignment addAssignment={this.addAssignment}  />
+                </Grid>
+              </Grid>
+              <div style={{ height: 450, width: '100%', align:"left"   }}>
+              <DataGrid rows={this.state.rows} columns={columns} />
+              </div>
                 <Button component={Link} to={{pathname:'/gradebook' , assignment: this.state.rows[this.state.selected]}} 
                         variant="outlined" color="primary" disabled={this.state.rows.length==0}  style={{margin: 10}}>
                   Grade
