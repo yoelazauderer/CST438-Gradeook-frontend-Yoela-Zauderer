@@ -24,6 +24,13 @@ function App() {
         <Route path='/gradebook/add' component={AddAssignment} />
        </Switch>
       </BrowserRouter>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path='/' component={Login} />
+          <Route exact path='/semester' component={Semester} />
+          <Route path='/schedule' component={Schedule} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
