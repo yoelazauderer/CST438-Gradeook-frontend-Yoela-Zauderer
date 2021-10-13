@@ -33,7 +33,7 @@ class Gradebook extends Component {
       fetch(`${SERVER_URL}/gradebook/${this.props.location.assignment.assignmentId}`, 
         {  
           method: 'GET', 
-          headers: { 'X-XSRF-TOKEN': token }
+          headers: { 'X-XSRF-TOKEN': token },
           credentials: 'include'
         } )
       .then((response) => response.json()) 
