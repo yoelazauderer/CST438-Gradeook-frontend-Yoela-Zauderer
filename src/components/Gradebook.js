@@ -34,7 +34,7 @@ class Gradebook extends Component {
         {  
           method: 'GET', 
           headers: { 'X-XSRF-TOKEN': token }
-          credentials: 'include',
+          credentials: 'include'
         } )
       .then((response) => response.json()) 
       .then((responseData) => { 
